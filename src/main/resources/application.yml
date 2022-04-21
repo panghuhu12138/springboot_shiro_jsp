@@ -57,4 +57,12 @@ spring:
         login-password: 123456
         # 开启可视化管理页面
         enabled: true
-
+  redis:
+    host: 106.14.63.9
+    port: 6379
+    password: ly@981211
+    timeout: 5000
+# 配置slq打印日志 （方式二）
+mybatis-plus:
+  configuration:
+    log-impl: com.panghu.log.MySlf4jImpl

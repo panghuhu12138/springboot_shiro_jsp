@@ -1,4 +1,4 @@
-package com.panghu.realms;
+package com.panghu.shiro.realms;
 
 import com.panghu.entity.User;
 import com.panghu.exception.CustomerException;

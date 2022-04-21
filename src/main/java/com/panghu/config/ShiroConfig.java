@@ -1,11 +1,13 @@
 package com.panghu.config;
 
-import com.panghu.realms.CustomerRealm;
+import com.panghu.shiro.cache.RedisCacheManager;
+import com.panghu.shiro.realms.CustomerRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +19,9 @@ import java.util.HashMap;
  */
 @Configuration
 public class ShiroConfig {
+
+    @Autowired
+    private RedisCacheManager redisCacheManager;
 
     @Bean("shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilter(DefaultWebSecurityManager securityManager) {
@@ -54,7 +59,7 @@ public class ShiroConfig {
         matcher.setHashIterations(1024);
         realm.setCredentialsMatcher(matcher);
         //开启缓存管理
-        realm.setCacheManager(new EhCacheManager());
+        realm.setCacheManager(redisCacheManager);
         //开启全局缓存，默认开启
         realm.setCachingEnabled(true);
         //开启认证缓存
