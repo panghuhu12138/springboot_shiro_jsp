@@ -20,9 +20,6 @@ import java.util.HashMap;
 @Configuration
 public class ShiroConfig {
 
-    @Autowired
-    private RedisCacheManager redisCacheManager;
-
     @Bean("shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilter(DefaultWebSecurityManager securityManager) {
         //创建shiroFilter用于拦截所有请求
@@ -59,7 +56,7 @@ public class ShiroConfig {
         matcher.setHashIterations(1024);
         realm.setCredentialsMatcher(matcher);
         //开启缓存管理
-        realm.setCacheManager(redisCacheManager);
+        realm.setCacheManager(new RedisCacheManager());
         //开启全局缓存，默认开启
         realm.setCachingEnabled(true);
         //开启认证缓存

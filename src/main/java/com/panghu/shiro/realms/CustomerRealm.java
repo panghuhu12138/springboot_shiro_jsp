@@ -3,6 +3,8 @@ package com.panghu.shiro.realms;
 import com.panghu.entity.User;
 import com.panghu.exception.CustomerException;
 import com.panghu.service.UserService;
+import com.panghu.shiro.cache.MyByteSource;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,7 +13,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +37,6 @@ public class CustomerRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
-        System.out.println(primaryPrincipal);
         User user = userService.queryUserByUsername((String) primaryPrincipal);
         String[] arr = user.getRole().split(",");
         return new SimpleAuthorizationInfo(Arrays.stream(arr).collect(Collectors.toSet()));
@@ -58,7 +58,7 @@ public class CustomerRealm extends AuthorizingRealm {
             User user = users.get(0);
             return new SimpleAuthenticationInfo(principal,
                     user.getPassword(),
-                    ByteSource.Util.bytes(user.getUserId()),
+                    new MyByteSource(user.getUserId().getBytes()),
                     this.getName());
         } else if (users.size() > 1) {
             throw new CustomerException("用户数异常！");

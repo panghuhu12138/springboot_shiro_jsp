@@ -6,14 +6,13 @@ import org.apache.shiro.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+/**
+ * @author panghuhu
+ */
 public class RedisCacheManager implements CacheManager {
 
-    @Autowired
-    private RedisCache redisCache;
-
     @Override
-    public <K, V> Cache<K, V> getCache(String s) throws CacheException {
-        return redisCache;
+    public <K, V> Cache<K, V> getCache(String cacheName) throws CacheException {
+        return new RedisCache<>(cacheName);
     }
 }

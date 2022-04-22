@@ -62,6 +62,7 @@ spring:
     port: 6379
     password: ly@981211
     timeout: 5000
+    database: 1
 # 配置slq打印日志 （方式二）
 mybatis-plus:
   configuration:

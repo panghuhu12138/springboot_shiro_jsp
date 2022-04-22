@@ -8,10 +8,12 @@ import java.io.Serializable;
 
 /**
  * 
+ * @author panghuhu
  * @TableName t_user
  */
 @TableName("t_user")
 public class User implements Serializable {
+    private static final long serialVersionUID = 6039363616521856749L;
     /**
      * 
      */
@@ -33,8 +35,6 @@ public class User implements Serializable {
      * 
      */
     private String role;
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 
